@@ -9,11 +9,9 @@ function App() {
       {console.log('inside the div')}
       {showEployees ? (
         <>
-          <Employee />
-          <Employee />
-          <Employee />
-          <Employee />
-          <Employee />
+          <Employee name='Daniel' role='Intern' />
+          <Employee name='John'/>
+          <Employee name='Magnus'/>
         </>
       ): (
         <p>You cannot see this page</p>
