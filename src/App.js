@@ -13,9 +13,17 @@ function App() {
             console.log(e.target.value)
             setRole(e.target.value)
           }} />
-          <Employee name='Daniel' role='Intern' />
-          <Employee name='John' role={role}/>
-          <Employee name='Magnus'/>
+          <div className="flex flex-wrap justify-center">
+            <Employee name='Daniel' role='Intern' img="https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg?s=612x612&w=is&k=20&c=AbkSDhhYr-FMi3vllBog0cU8ZA5lntxL9LfleKYuVXM="/>
+            <Employee name='John' role={role} img="https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg?s=612x612&w=is&k=20&c=AbkSDhhYr-FMi3vllBog0cU8ZA5lntxL9LfleKYuVXM="/>
+            <Employee name='Magnus' img="https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg?s=612x612&w=is&k=20&c=AbkSDhhYr-FMi3vllBog0cU8ZA5lntxL9LfleKYuVXM="/>
+            <Employee name='Daniel' role='Intern' img="https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg?s=612x612&w=is&k=20&c=AbkSDhhYr-FMi3vllBog0cU8ZA5lntxL9LfleKYuVXM="/>
+            <Employee name='John' role={role} img="https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg?s=612x612&w=is&k=20&c=AbkSDhhYr-FMi3vllBog0cU8ZA5lntxL9LfleKYuVXM="/>
+            <Employee name='Magnus' img="https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg?s=612x612&w=is&k=20&c=AbkSDhhYr-FMi3vllBog0cU8ZA5lntxL9LfleKYuVXM="/>
+            <Employee name='Daniel' role='Intern' img="https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg?s=612x612&w=is&k=20&c=AbkSDhhYr-FMi3vllBog0cU8ZA5lntxL9LfleKYuVXM="/>
+            <Employee name='John' role={role} img="https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg?s=612x612&w=is&k=20&c=AbkSDhhYr-FMi3vllBog0cU8ZA5lntxL9LfleKYuVXM="/>
+            <Employee name='Magnus' img="https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg?s=612x612&w=is&k=20&c=AbkSDhhYr-FMi3vllBog0cU8ZA5lntxL9LfleKYuVXM="/>
+          </div>
         </>
       ): (
         <p>You cannot see this page</p>
