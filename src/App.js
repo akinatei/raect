@@ -1,28 +1,62 @@
 import Employee from './components/Employee';
 import { useState } from 'react';
 import './index.css';
+import { v4 as uuidv4 } from 'uuid';
 
 function App() {
   const [role, setRole] = useState('Dev')
+  const [employees, setEmployees] = useState([
+    {
+      name: 'Daniel',
+      role: 'Developer',
+      img: 'https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg'
+    },
+    {
+      name: 'Ruth',
+      role: 'CCS',
+      img: 'https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg'
+    },
+    {
+      name: 'Sal',
+      role: 'Senior',
+      img: 'https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg'
+    },
+    {
+      name: 'Jake',
+      role: 'Software Engineer',
+      img: 'https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg'
+    },
+    {
+      name: 'Molly',
+      role: 'Researcher',
+      img: 'https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg'
+    },
+    {
+      name: 'Grimes',
+      role: 'Operations',
+      img: 'https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg'
+    }
+  ])
   const showEployees = true
   return (
     <div className="App">
       {showEployees ? (
         <>
           <input type="text" onChange={(e) =>{
-            console.log(e.target.value)
+            //console.log(e.target.value)
             setRole(e.target.value)
           }} />
           <div className="flex flex-wrap justify-center">
-            <Employee name='Daniel' role='Intern' img="https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg?s=612x612&w=is&k=20&c=AbkSDhhYr-FMi3vllBog0cU8ZA5lntxL9LfleKYuVXM="/>
-            <Employee name='John' role={role} img="https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg?s=612x612&w=is&k=20&c=AbkSDhhYr-FMi3vllBog0cU8ZA5lntxL9LfleKYuVXM="/>
-            <Employee name='Magnus' img="https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg?s=612x612&w=is&k=20&c=AbkSDhhYr-FMi3vllBog0cU8ZA5lntxL9LfleKYuVXM="/>
-            <Employee name='Daniel' role='Intern' img="https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg?s=612x612&w=is&k=20&c=AbkSDhhYr-FMi3vllBog0cU8ZA5lntxL9LfleKYuVXM="/>
-            <Employee name='John' role={role} img="https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg?s=612x612&w=is&k=20&c=AbkSDhhYr-FMi3vllBog0cU8ZA5lntxL9LfleKYuVXM="/>
-            <Employee name='Magnus' img="https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg?s=612x612&w=is&k=20&c=AbkSDhhYr-FMi3vllBog0cU8ZA5lntxL9LfleKYuVXM="/>
-            <Employee name='Daniel' role='Intern' img="https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg?s=612x612&w=is&k=20&c=AbkSDhhYr-FMi3vllBog0cU8ZA5lntxL9LfleKYuVXM="/>
-            <Employee name='John' role={role} img="https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg?s=612x612&w=is&k=20&c=AbkSDhhYr-FMi3vllBog0cU8ZA5lntxL9LfleKYuVXM="/>
-            <Employee name='Magnus' img="https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg?s=612x612&w=is&k=20&c=AbkSDhhYr-FMi3vllBog0cU8ZA5lntxL9LfleKYuVXM="/>
+            {employees.map((employee) =>{ 
+              //console.log(employee);
+              console.log(uuidv4())
+              return (<Employee
+                key={uuidv4()}
+                name={employee.name}
+                role={employee.role}
+                img={employee.img}
+              />)
+             })}
           </div>
         </>
       ): (
