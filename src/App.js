@@ -7,36 +7,51 @@ function App() {
   const [role, setRole] = useState('Dev')
   const [employees, setEmployees] = useState([
     {
+      id: 1,
       name: 'Daniel',
       role: 'Developer',
       img: 'https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg'
     },
     {
+      id: 2,
       name: 'Ruth',
       role: 'CCS',
       img: 'https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg'
     },
     {
+      id: 3,
       name: 'Sal',
       role: 'Senior',
       img: 'https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg'
     },
     {
+      id: 4,
       name: 'Jake',
       role: 'Software Engineer',
       img: 'https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg'
     },
     {
+      id: 5,
       name: 'Molly',
       role: 'Researcher',
       img: 'https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg'
     },
     {
+      id: 6,
       name: 'Grimes',
       role: 'Operations',
       img: 'https://media.istockphoto.com/id/184324190/photo/relaxed-businessman.jpg'
     }
   ])
+  function updateEmployee(id, newName, newRole) {
+    const updatedEmployees = employees.map((employee) => {
+      if (id === employee.id){
+        return { ...employee, name:newName, role:newRole }
+      }
+      return employee
+    })
+    setEmployees(updatedEmployees)
+  }
   const showEployees = true
   return (
     <div className="App">
@@ -51,10 +66,13 @@ function App() {
               //console.log(employee);
               console.log(uuidv4())
               return (<Employee
-                key={uuidv4()}
+                //key={uuidv4()}
+                key={employee.id}
+                id={employee.id}
                 name={employee.name}
                 role={employee.role}
                 img={employee.img}
+                updateEmployee={updateEmployee}
               />)
              })}
           </div>
