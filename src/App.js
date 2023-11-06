@@ -4,6 +4,7 @@ import './index.css';
 import { v4 as uuidv4 } from 'uuid';
 import AddEmployee from './components/AddEmployee';
 import EditEmployee from './components/EditEmployee';
+import Header from './components/Header';
 
 function App() {
   const [role, setRole] = useState('Dev')
@@ -67,14 +68,12 @@ function App() {
 
   const showEployees = true
   return (
-    <div className="App">
+    <div className="App bg-gray-300 min-h-screen">
+      <Header />
       {showEployees ? (
         <>
-          <input type="text" onChange={(e) =>{
-            //console.log(e.target.value)
-            setRole(e.target.value)
-          }} />
-          <div className="flex flex-wrap justify-center">
+
+          <div className="flex flex-wrap justify-center my-2">
             {employees.map((employee) =>{ 
               //console.log(employee);
               //console.log(uuidv4())
