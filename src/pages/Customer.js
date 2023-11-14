@@ -10,28 +10,42 @@ export default function Customer(){
     const [tempCustomer, setTempCustomer] = useState()
     const [changed, setChanged] = useState(false)
     const [notFound, setNotFound] = useState()
-    const url = baseUrl+'api/customers/'+id;
+    const [error, setError] = useState()
 
+    // eslint-disable-next-line
     useEffect(() => {
-        // console.log('customer', customer)
-        // console.log('tempCustomer', tempCustomer)
-        // console.log(changed)
+        if(!tempCustomer) return
+        if(!customer) return
+        let equal = true
+        if (customer.name !== tempCustomer.name){
+            equal = false
+        }
+        if (customer.industry !== tempCustomer.industry){
+            equal = false
+        }
+        if (equal) {
+            setChanged(false)
+        }
     })
     useEffect(() => {
+        const url = baseUrl+'api/customers/'+id;
         fetch(url)
         .then((response) => {
         if(response.status === 404){
             // using redirect
             //navigate('/404')
-            
             setNotFound(true)
 
-        } else{
-        return response.json()
         }
+        if(!response.ok) throw new Error('Something went wrong try again later')
+        return response.json()
+        
     })
         .then((data) => {setCustomer(data.customer)
                         setTempCustomer(data.customer)
+                        setError(undefined)
+        }).catch((e) => {
+            setError(e.message)
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -45,13 +59,20 @@ export default function Customer(){
             },
             body: JSON.stringify(tempCustomer)
         }).then((response) => {
+            if(!response.ok) throw new Error('something went wrong')
             return response.json()
         }).then((data) => {
-            setChanged(false)
             setCustomer(data.customer)
-            console.log(data)
-        }).catch()
+            setChanged(false)
+            setError(undefined)
+        }).catch((e)=>{
+            setError(e.message)
+        })
     }
+
+    // function compareCustomers(){
+
+    // }
     return( 
         <>
         {notFound ? <p>The page of {id} is not in our database</p> : null}
@@ -67,15 +88,15 @@ export default function Customer(){
             }} />
             {changed ? 
             <>
-            <button onClick={(e) => {
+            <button className="mx-2" onClick={(e) => {
                 setTempCustomer({ ...customer })
                 setChanged(false)
             }}>Cancel</button> 
             <button onClick={updateCustomer}>Save</button>
             </>
              : null}
-        </div>: null}
-        <button onClick={(e) => {
+
+        <button className="mx-2" onClick={(e) => {
             const url = baseUrl+'api/customers/'+id
             fetch(url, { method: 'DELETE',
                         headers: {
@@ -85,12 +106,15 @@ export default function Customer(){
                 if (!response.ok) {
                     throw new Error('Something went wrong')
                 }
+                //setError(undefined)
                 // assume the object was deleted
                 navigate('/customers')
             }).catch((e) => {
-                console.log(e)
+                setError(e.message)
             })
         }}>Delete</button>
+        </div>: null}
+        {error ? <p>{error}</p> : null}
         <br />
         <Link to={'/customers'}>Go back</Link>
         </>
