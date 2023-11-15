@@ -50,7 +50,8 @@ export default function Customer(){
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     
-    function updateCustomer() {
+    function updateCustomer(e) {
+        e.preventDefault()
         const url = baseUrl + 'api/customers/' + id
         fetch(url, {
             method: 'POST',
@@ -74,29 +75,53 @@ export default function Customer(){
 
     // }
     return( 
-        <>
+        <div className="p-3">
         {notFound ? <p>The page of {id} is not in our database</p> : null}
         {customer ? <div>
             {/* <p className="m-2 block px-2">{tempCustomer.id}</p> */}
-            <input className="m-2 block px-2" type="text" value={tempCustomer.name} onChange={(e) =>{
+            <form className="w-full max-w-sm" id="customer" onSubmit={updateCustomer}>
+            <div className="md:flex md:items-center mb-6">
+            <div className="md:w-1/4">
+            <label htmlFor="name">Name</label>
+            </div>
+            <div className="md:w-3/4">
+            <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+             id="name" type="text" value={tempCustomer.name} onChange={(e) =>{
                 setChanged(true)
                 setTempCustomer({...tempCustomer, name: e.target.value})
             }} />
-            <input className="m-2 block px-2" type="text" value={tempCustomer.industry} onChange={(e) =>{
+            </div>
+            </div>
+            <div className="md:flex md:items-center mb-6">
+            <div className="md:w-1/4">
+            <label htmlFor="industry">Industry</label>
+            </div>
+            <div className="md:w-3/4">
+            <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+            id="indusry" type="text" value={tempCustomer.industry} onChange={(e) =>{
                 setChanged(true)
                 setTempCustomer({...tempCustomer, industry: e.target.value})
             }} />
+            </div>
+            </div>
+            </form>
             {changed ? 
-            <>
-            <button className="mx-2" onClick={(e) => {
+            <div className="mb-2">
+            <button
+            className="bg-slate-400 hover:bg-slate-500 text-white font-bold py-2 px-4 mr-2 rounded"
+             onClick={(e) => {
                 setTempCustomer({ ...customer })
                 setChanged(false)
             }}>Cancel</button> 
-            <button onClick={updateCustomer}>Save</button>
-            </>
+            <button
+            className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+             form="customer">Save</button>
+            </div>
              : null}
 
-        <button className="mx-2" onClick={(e) => {
+        <button
+        className="bg-slate-900 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded"
+         onClick={(e) => {
             const url = baseUrl+'api/customers/'+id
             fetch(url, { method: 'DELETE',
                         headers: {
@@ -116,7 +141,11 @@ export default function Customer(){
         </div>: null}
         {error ? <p>{error}</p> : null}
         <br />
-        <Link to={'/customers'}>Go back</Link>
-        </>
+        <Link to={'/customers'}>
+            <button className="no-underline bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+            ← Go back
+            </button>
+            </Link>
+        </div>
     )
 }

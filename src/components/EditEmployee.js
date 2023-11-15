@@ -30,8 +30,6 @@ function EditEmployee(props) {
         <form onSubmit={(e) => {
             handleClose()
             e.preventDefault()
-            console.log('hello from edit employee')
-            console.log(props.id, name, role)
             props.updateEmployee(props.id, name, role)
         }}
          id="editmodal" className="w-full max-w-sm">
@@ -61,7 +59,7 @@ function EditEmployee(props) {
           <button className="bg-slate-400 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded' form='editmodal" onClick={handleClose}>
             Close
           </button>
-          <button form="editmodal" className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded' form='editmodal">Update</button>
+          <button form="editmodal" className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded form='editmodal">Update</button>
         </Modal.Footer>
       </Modal>
     </>
