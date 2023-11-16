@@ -14,12 +14,17 @@ export default function Customers() {
     const navigate = useNavigate()
     useEffect(() => {
         const url = baseUrl+'api/customers/'
-        fetch(url)
+        fetch(url, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + localStorage.getItem('access')
+            }
+        })
         .then((response) => {
             if(response.status === 401) {
                 navigate('/login')
             }
-            response.json()
+            return response.json()
         })
         .then((data) => {
             console.log(data)

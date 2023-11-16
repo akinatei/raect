@@ -29,7 +29,12 @@ export default function Customer(){
     })
     useEffect(() => {
         const url = baseUrl+'api/customers/'+id;
-        fetch(url)
+        fetch(url, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + localStorage.getItem('access')
+            }
+        })
         .then((response) => {
         if(response.status === 404){
             // using redirect
@@ -59,9 +64,13 @@ export default function Customer(){
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + localStorage.getItem('access')
             },
             body: JSON.stringify(tempCustomer)
         }).then((response) => {
+            if (response.status === 401) {
+                navigate('/login')
+            }
             if(!response.ok) throw new Error('something went wrong')
             return response.json()
         }).then((data) => {
@@ -126,10 +135,15 @@ export default function Customer(){
          onClick={(e) => {
             const url = baseUrl+'api/customers/'+id
             fetch(url, { method: 'DELETE',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        }, })
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + localStorage.getItem('access')
+            }, 
+                    })
             .then((response) => {
+                if (response.status === 401) {
+                    navigate('/login')
+                }
                 if (!response.ok) {
                     throw new Error('Something went wrong')
                 }
