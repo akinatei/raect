@@ -36,6 +36,8 @@ export default function Customer(){
             //navigate('/404')
             setNotFound(true)
 
+        } else if (response.status === 401) {
+            navigate('/login')
         }
         if(!response.ok) throw new Error('Something went wrong try again later')
         return response.json()
