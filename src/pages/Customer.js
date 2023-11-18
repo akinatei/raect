@@ -1,4 +1,4 @@
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 //import NotFound from "../components/NotFound";
 import { baseUrl } from "../shared";
@@ -11,6 +11,7 @@ export default function Customer(){
     const [changed, setChanged] = useState(false)
     const [notFound, setNotFound] = useState()
     const [error, setError] = useState()
+    const location = useLocation()
 
     // eslint-disable-next-line
     useEffect(() => {
@@ -42,7 +43,11 @@ export default function Customer(){
             setNotFound(true)
 
         } else if (response.status === 401) {
-            navigate('/login')
+            navigate('/login', {
+                state: {
+                    previousUrl: location.pathname
+                }
+            })
         }
         if(!response.ok) throw new Error('Something went wrong try again later')
         return response.json()
@@ -69,7 +74,11 @@ export default function Customer(){
             body: JSON.stringify(tempCustomer)
         }).then((response) => {
             if (response.status === 401) {
-                navigate('/login')
+                navigate('/login', {
+                    state: {
+                        previousUrl: location.pathname
+                    }
+                })
             }
             if(!response.ok) throw new Error('something went wrong')
             return response.json()
@@ -142,7 +151,11 @@ export default function Customer(){
                     })
             .then((response) => {
                 if (response.status === 401) {
-                    navigate('/login')
+                    navigate('/login', {
+                        state: {
+                            previousUrl: location.pathname
+                        }
+                    })
                 }
                 if (!response.ok) {
                     throw new Error('Something went wrong')
