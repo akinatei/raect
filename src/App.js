@@ -1,9 +1,9 @@
-import Employee from './components/Employee';
-import { useState } from 'react';
+// import Employee from './components/Employee';
+import { createContext, useState } from 'react';
 import './index.css';
-import { v4 as uuidv4 } from 'uuid';
-import AddEmployee from './components/AddEmployee';
-import EditEmployee from './components/EditEmployee';
+// import { v4 as uuidv4 } from 'uuid';
+// import AddEmployee from './components/AddEmployee';
+// import EditEmployee from './components/EditEmployee';
 import Header from './components/Header';
 import Employees from './pages/Employess';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -14,9 +14,13 @@ import NotFound from './components/NotFound';
 import Customer from './pages/Customer';
 import Login from './pages/Login';
 
+export const LoginContext = createContext()
+
 function App() {
+  const [loggedIn, setLoggedIn] = useState(true)
 
   return(
+    <LoginContext.Provider value={[loggedIn, setLoggedIn]}>
     <BrowserRouter>
     <Header>
       <Routes>
@@ -31,6 +35,7 @@ function App() {
       </Routes>
     </Header>
     </BrowserRouter>
+    </LoginContext.Provider>
    
   )
 }
