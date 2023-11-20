@@ -1,5 +1,5 @@
-import { useContext, useEffect } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
+import { useContext } from 'react'
+import { Disclosure } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { NavLink } from 'react-router-dom'
 import { LoginContext } from '../App'
@@ -10,9 +10,9 @@ const navigation = [
   { name: 'Dictionary', href: '/dictionary' },
 ]
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
+// function classNames(...classes) {
+//   return classes.filter(Boolean).join(' ')
+// }
 
 export default function Header(props) {
   const [loggedIn, setLoggedIn] = useContext(LoginContext)
@@ -56,12 +56,23 @@ export default function Header(props) {
                         {item.name}
                       </NavLink>
                     ))}
+                    {loggedIn ? (
                     <NavLink
-                        to={loggedIn ? '/logout' : '/login'}
+                        to={'/login'}
+                        onClick = {() => {
+                          setLoggedIn(false)
+                          localStorage.clear()
+                        }}
                         className='rounded-md px-3 py-2 text-sm font-medium no-underline text-gray-300 hover:bg-gray-700 hover:text-white'
                       >
-                        {loggedIn ? 'Logout' : 'Login'}
-                    </NavLink>
+                        Logout
+                    </NavLink> ) : (
+                    <NavLink
+                        to={'/login'}
+                        className='rounded-md px-3 py-2 text-sm font-medium no-underline text-gray-300 hover:bg-gray-700 hover:text-white'
+                      >
+                        Login
+                    </NavLink> )}
                   </div>
                 </div>
               </div>
@@ -100,14 +111,24 @@ export default function Header(props) {
                 >
                   {item.name}
                   </NavLink>
-
               ))}
+              {loggedIn ? (
               <NavLink
-                    to={loggedIn ? '/logout' : '/login'}
+                        to={'/login'}
+                        onClick = {() => {
+                          setLoggedIn(false)
+                          localStorage.clear()
+                        }}
                     className='block rounded-md px-3 py-2 text-base font-medium no-underline text-gray-300 hover:bg-gray-700 hover:text-white'
-                    >
-                    {loggedIn ? 'Logout' : 'Login'}
-              </NavLink>
+                      >
+                        Logout
+                    </NavLink> ) : (
+                    <NavLink
+                        to={'/login'}
+                    className='block rounded-md px-3 py-2 text-base font-medium no-underline text-gray-300 hover:bg-gray-700 hover:text-white'
+                      >
+                        Login
+                    </NavLink> )}
             </div>
           </Disclosure.Panel>
           
