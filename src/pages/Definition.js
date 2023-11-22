@@ -3,16 +3,24 @@ import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import DefinitionSearch from "../components/DefinitionSearch";
 import NotFound from "../components/NotFound";
+import useFetch from "../hooks/UseFetch";
 
 export default function Definition() {
-    const [word, setWord] = useState()
-    const [notFound, setNotFound] = useState(false)
-    const [error, setError] = useState(false)
+    //const [word, setWord] = useState()
+    //const [notFound, setNotFound] = useState(false)
+    //const [error, setError] = useState(false)
     //console.log(useParams())
     let { search } = useParams()
     const navigate = useNavigate()
     const location = useLocation()
 
+    const { data: [{ meanings: word }] = [{}], errorStatus } = useFetch('https://api.dictionaryapi.dev/api/v2/entries/en/'+search)
+
+    // useEffect(() => {
+    //     console.log(word)
+    // })
+
+    /*
     useEffect(() => {
         //const url = 'https://httpstat.us/500'
         const url = 'https://api.dictionaryapi.dev/api/v2/entries/en/'+search
@@ -45,8 +53,10 @@ export default function Definition() {
                 console.log(e.message)
             })
     },[]);
+    */
 
-    if (notFound === true) {
+    
+    if (errorStatus === true) {
         return(
         <>
          <NotFound />
@@ -55,7 +65,7 @@ export default function Definition() {
         )
     }
 
-    if (error === true) {
+    if (errorStatus) {
         return(
         <>
          <p>Something went wrong, try again ?</p>
@@ -63,6 +73,7 @@ export default function Definition() {
          </>
         )
     }
+    
     
     return (
     <>
