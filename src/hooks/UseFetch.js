@@ -7,7 +7,7 @@ export default function useFetch(url, { method, headers, body } = {}) {
     const navigate = useNavigate()
     const location = useLocation()
 
-    useEffect(() => {
+   function request() {
         //console.log(method, headers, body)
         fetch(url, {
             method: method,
@@ -30,6 +30,36 @@ export default function useFetch(url, { method, headers, body } = {}) {
         }).catch((e) => {
             setErrorStatus(e)
         })
-    }, [])
-    return { data, errorStatus }
+    }
+
+    function appendData(newData) {
+        fetch(url, {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify(newData)
+        }).then((response) => {
+            if(response.status === 401) {
+                navigate('/login', {
+                    state: {
+                        previousUrl: location.pathname,
+                    },
+                })
+            }
+            if(!response.ok) {
+                throw response.status
+            }
+            return response.json()
+        }).then((d) => {
+            const submitted = Object.values(d)[0]
+
+            const newState = { ...data }
+            Object.values(data)[0].push(submitted)
+            
+            setData(newState)
+        }).catch((e) => {
+            console.log(e)
+            setErrorStatus(e)
+        })
+    }
+    return { request, appendData, data, errorStatus }
 }

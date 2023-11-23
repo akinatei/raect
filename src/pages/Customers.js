@@ -19,7 +19,7 @@ export default function Customers() {
 
     const url = baseUrl+'api/customers/'
 
-    const { data: {customers} = {}, errorStatus } = useFetch(url, {
+    const { request, appendData, data: {customers} = {}, errorStatus } = useFetch(url, {
     method: 'GET', 
     headers: {
         'Content-Type': 'application/json',
@@ -27,8 +27,12 @@ export default function Customers() {
     }})
 
     useEffect(() => {
-        console.log(customers, errorStatus)
-    })
+        request()
+    }, [])
+
+    // useEffect(() => {
+    //     console.log(request, appendData, customers, errorStatus)
+    // })
 
     /*
     useEffect(() => {
@@ -58,27 +62,11 @@ export default function Customers() {
     */
 
     function newCustomer(name, industry) {
-        /*
-        const data = {name: name, industry: industry}
-        const url = baseUrl + 'api/customers/'
-        fetch(url, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(data),
-        }).then((response) => {
-            if(!response.ok) {
-                throw new Error('Something went wrong')
-            }
-            return response.json()
-        }).then((data) => {
+        appendData({ name: name, industry: industry })
+
+        if(!errorStatus) {
             toggleShow()
-            console.log(data)
-            setCustomers([...customers, data.customer])
-            // make sure the list is updated
-        }).catch((e) => {
-            console.log(e)
-        })
-        */
+        }
     }
 
     return ( 

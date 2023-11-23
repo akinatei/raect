@@ -14,11 +14,11 @@ export default function Definition() {
     const navigate = useNavigate()
     const location = useLocation()
 
-    const { data: [{ meanings: word }] = [{}], errorStatus } = useFetch('https://api.dictionaryapi.dev/api/v2/entries/en/'+search)
+    const { request, data: [{ meanings: word }] = [{}], errorStatus } = useFetch('https://api.dictionaryapi.dev/api/v2/entries/en/'+search)
 
-    // useEffect(() => {
-    //     console.log(word)
-    // })
+    useEffect(() => {
+        request()
+    }, [])
 
     /*
     useEffect(() => {
